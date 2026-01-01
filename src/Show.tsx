@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { CheckCircle2, Lightbulb, PlayCircle, BookOpen, X, CheckCircle, XCircle, ChevronRight, Trophy } from "lucide-react";
+import {
+  CheckCircle2,
+  Lightbulb,
+  PlayCircle,
+  BookOpen,
+  X,
+  CheckCircle,
+  XCircle,
+  ChevronRight,
+  Trophy,
+} from "lucide-react";
 import { questions1, questions } from "./questions";
 
 function Show() {
@@ -8,13 +18,13 @@ function Show() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
-  const [quizSet, setQuizSet] = useState<'set1' | 'set2'>('set1');
+  const [quizSet, setQuizSet] = useState<"set1" | "set2">("set1");
   const [quizComplete, setQuizComplete] = useState(false);
 
-  const currentQuestions = quizSet === 'set1' ? questions1 : questions;
+  const currentQuestions = quizSet === "set1" ? questions1 : questions;
   const currentQuestion = currentQuestions[currentQuestionIndex];
 
-  const startQuiz = (set: 'set1' | 'set2') => {
+  const startQuiz = (set: "set1" | "set2") => {
     setQuizSet(set);
     setQuizMode(true);
     setCurrentQuestionIndex(0);
@@ -57,7 +67,9 @@ function Show() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center p-6">
         <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-md w-full text-center">
           <Trophy className="w-20 h-20 text-amber-500 mx-auto mb-6" />
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">Quiz Complete!</h2>
+          <h2 className="text-3xl font-bold text-slate-800 mb-4">
+            Quiz Complete!
+          </h2>
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-6">
             <p className="text-5xl font-bold text-blue-600 mb-2">
               {score}/{currentQuestions.length}
@@ -79,7 +91,7 @@ function Show() {
 
   if (quizMode) {
     const isCorrect = selectedAnswer === currentQuestion.answer;
-    
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex flex-col">
         {/* Quiz Header */}
@@ -93,18 +105,28 @@ function Show() {
                 <X className="w-6 h-6" />
               </button>
               <div>
-                <p className="text-sm text-slate-500 font-medium">Question {currentQuestionIndex + 1} of {currentQuestions.length}</p>
+                <p className="text-sm text-slate-500 font-medium">
+                  Question {currentQuestionIndex + 1} of{" "}
+                  {currentQuestions.length}
+                </p>
                 <div className="w-48 h-2 bg-slate-200 rounded-full mt-1">
-                  <div 
+                  <div
                     className="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full transition-all"
-                    style={{ width: `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%` }}
+                    style={{
+                      width: `${
+                        ((currentQuestionIndex + 1) / currentQuestions.length) *
+                        100
+                      }%`,
+                    }}
                   />
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-3 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-2 rounded-xl">
               <Trophy className="w-5 h-5 text-emerald-600" />
-              <span className="font-bold text-emerald-700 text-lg">{score}/{currentQuestions.length}</span>
+              <span className="font-bold text-emerald-700 text-lg">
+                {score}/{currentQuestions.length}
+              </span>
             </div>
           </div>
         </div>
@@ -127,10 +149,10 @@ function Show() {
               {currentQuestion.opts.map((opt, idx) => {
                 const isSelected = selectedAnswer === opt;
                 const isCorrectAnswer = opt === currentQuestion.answer;
-                
+
                 let bgColor = "bg-slate-50 hover:bg-slate-100 border-slate-300";
                 let textColor = "text-slate-700";
-                
+
                 if (showResult) {
                   if (isCorrectAnswer) {
                     bgColor = "bg-emerald-50 border-emerald-400";
@@ -149,7 +171,11 @@ function Show() {
                     key={idx}
                     onClick={() => handleAnswerClick(opt)}
                     disabled={showResult}
-                    className={`w-full text-left px-5 py-4 rounded-xl border-2 transition-all font-medium text-base ${bgColor} ${textColor} ${!showResult && 'hover:shadow-md cursor-pointer'} ${showResult && 'cursor-not-allowed'} flex items-center justify-between`}
+                    className={`w-full text-left px-5 py-4 rounded-xl border-2 transition-all font-medium text-base ${bgColor} ${textColor} ${
+                      !showResult && "hover:shadow-md cursor-pointer"
+                    } ${
+                      showResult && "cursor-not-allowed"
+                    } flex items-center justify-between`}
                   >
                     <span>{opt}</span>
                     {showResult && isCorrectAnswer && (
@@ -167,15 +193,25 @@ function Show() {
             {showResult && (
               <div className="space-y-4 animate-in fade-in duration-300">
                 {/* Result Badge */}
-                <div className={`rounded-xl p-4 ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500' : 'bg-red-50 border-l-4 border-red-500'}`}>
+                <div
+                  className={`rounded-xl p-4 ${
+                    isCorrect
+                      ? "bg-emerald-50 border-l-4 border-emerald-500"
+                      : "bg-red-50 border-l-4 border-red-500"
+                  }`}
+                >
                   <div className="flex items-center gap-2">
                     {isCorrect ? (
                       <CheckCircle className="w-6 h-6 text-emerald-600" />
                     ) : (
                       <XCircle className="w-6 h-6 text-red-600" />
                     )}
-                    <span className={`font-bold text-lg ${isCorrect ? 'text-emerald-800' : 'text-red-800'}`}>
-                      {isCorrect ? 'Correct!' : 'Incorrect'}
+                    <span
+                      className={`font-bold text-lg ${
+                        isCorrect ? "text-emerald-800" : "text-red-800"
+                      }`}
+                    >
+                      {isCorrect ? "Correct!" : "Incorrect"}
                     </span>
                   </div>
                 </div>
@@ -185,8 +221,12 @@ function Show() {
                   <div className="flex gap-3 items-start">
                     <Lightbulb className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-bold text-amber-900 mb-2">Solution:</h4>
-                      <p className="text-amber-800 leading-relaxed">{currentQuestion.method}</p>
+                      <h4 className="font-bold text-amber-900 mb-2">
+                        Solution:
+                      </h4>
+                      <p className="text-amber-800 leading-relaxed">
+                        {currentQuestion.method}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -202,7 +242,7 @@ function Show() {
                       <ChevronRight className="w-5 h-5" />
                     </>
                   ) : (
-                    'Finish Quiz'
+                    "Finish Quiz"
                   )}
                 </button>
               </div>
@@ -234,12 +274,17 @@ function Show() {
                 1
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-800">Question Set 1</h3>
-                <p className="text-slate-600">Questions {questions1[0]?.num}-{questions1[questions1.length - 1]?.num}</p>
+                <h3 className="text-xl font-bold text-slate-800">
+                  Question Set 1
+                </h3>
+                <p className="text-slate-600">
+                  Questions {questions1[0]?.num}-
+                  {questions1[questions1.length - 1]?.num}
+                </p>
               </div>
             </div>
             <button
-              onClick={() => startQuiz('set1')}
+              onClick={() => startQuiz("set1")}
               className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <PlayCircle className="w-5 h-5" />
@@ -253,12 +298,17 @@ function Show() {
                 2
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-800">Question Set 2</h3>
-                <p className="text-slate-600">Questions {questions[0]?.num}-{questions[questions.length - 1]?.num}</p>
+                <h3 className="text-xl font-bold text-slate-800">
+                  Question Set 2
+                </h3>
+                <p className="text-slate-600">
+                  Questions {questions[0]?.num}-
+                  {questions[questions.length - 1]?.num}
+                </p>
               </div>
             </div>
             <button
-              onClick={() => startQuiz('set2')}
+              onClick={() => startQuiz("set2")}
               className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2"
             >
               <PlayCircle className="w-5 h-5" />
@@ -271,7 +321,8 @@ function Show() {
         <div className="mb-8">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-5 py-3 rounded-xl mb-5 inline-flex items-center gap-2 shadow-md">
             <h2 className="text-xl font-bold">
-              Set 1 (Q{questions1[0]?.num}-{questions1[questions1.length - 1]?.num})
+              Set 1 (Q{questions1[0]?.num}-
+              {questions1[questions1.length - 1]?.num})
             </h2>
           </div>
 
@@ -334,7 +385,8 @@ function Show() {
         <div className="mb-8">
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-3 rounded-xl mb-5 inline-flex items-center gap-2 shadow-md">
             <h2 className="text-xl font-bold">
-              Set 2 (Q{questions[0]?.num}-{questions[questions.length - 1]?.num})
+              Set 2 (Q{questions[0]?.num}-{questions[questions.length - 1]?.num}
+              )
             </h2>
           </div>
 
