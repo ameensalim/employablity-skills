@@ -2,7 +2,8 @@ import "./App.css";
 import Show from "./Show";
 
 function App() {
-  return <Show />;
+  return "Under develpment";
+  // return <Show />;
 }
 
 export default App;
